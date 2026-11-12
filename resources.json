@@ -24,7 +24,25 @@
       "url": "https://boredofstudies.org/resources/2027-hsc-mathematics-advanced-ultimate-100-mark-assessment-1-practice-paper.21171/",
       "source": "Bored of Studies",
       "availability": "external",
-      "disclaimer": "Independent practice paper; not affiliated with NESA or any school. The first uploaded version used the Pri Learning name. It is not an official examination. Access to solutions depends on the attachments currently available on Bored of Studies."
+      "disclaimer": "Independent practice paper; not affiliated with NESA or any school. The first uploaded version used the Pri Learning name. It is not an official examination. Access to solutions depends on the attachments currently available on Bored of Studies.",
+      "readingMinutes": 10,
+      "workingMinutes": 180,
+      "sections": [
+        {
+          "label": "Section I",
+          "start": 1,
+          "end": 10,
+          "format": "Multiple choice",
+          "marks": 10
+        },
+        {
+          "label": "Section II",
+          "start": 11,
+          "end": 27,
+          "format": "Extended response",
+          "marks": 90
+        }
+      ]
     }
   ]
 }

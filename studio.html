@@ -39,10 +39,14 @@
               <div class="form-field"><label for="r-marks">Total marks</label><input id="r-marks" type="number" min="0" max="1000" value="100"></div>
               <div class="form-field"><label for="r-questions">Number of questions</label><input id="r-questions" type="number" min="0" max="500" value="20"></div>
             </div>
-            <div class="field-row">
-              <div class="form-field"><label for="r-duration">Suggested duration</label><input id="r-duration" type="text" value="3 hours" maxlength="60"></div>
-              <div class="form-field"><label for="r-tags">Tags (comma separated)</label><input id="r-tags" type="text" value="2027 HSC, Practice paper" maxlength="180"></div>
+            <div id="exam-details" class="exam-details">
+              <div class="field-row">
+                <div class="form-field"><label for="r-reading">Reading time (minutes)</label><input id="r-reading" type="number" min="0" max="90" value="10"></div>
+                <div class="form-field"><label for="r-working">Working time (minutes)</label><input id="r-working" type="number" min="1" max="600" value="180"></div>
+              </div>
+              <div class="form-field"><label for="r-mcq">Multiple-choice questions (if applicable)</label><input id="r-mcq" type="number" min="0" max="500" value="10"><small>Exam Desk creates section labels based on this number; use 0 for papers without a multiple-choice section.</small></div>
             </div>
+            <div class="form-field"><label for="r-tags">Tags (comma separated)</label><input id="r-tags" type="text" value="2027 HSC, Practice paper" maxlength="180"></div>
             <div class="form-field"><label for="r-url">External resource link</label><input id="r-url" type="url" placeholder="https://example.org/resource.pdf"><small>Optional if uploading a PDF directly to the repository.</small></div>
             <div class="upload-zone"><label for="r-file">PDF file</label><input id="r-file" type="file" accept=".pdf,application/pdf"><p id="file-status">Select a PDF if it will be hosted in this site's GitHub repository. The studio prepares metadata; the actual file is uploaded on GitHub in the final step.</p></div>
             <div id="form-errors" class="form-errors" hidden role="alert"></div>

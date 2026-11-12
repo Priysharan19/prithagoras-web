@@ -1,73 +1,89 @@
 # Prithagoras
 
-**Mathematics, without limits.**
+**Independent Australian HSC mathematics resources and a private practice workspace.**
 
-Prithagoras is an independently branded Australian HSC mathematics resource library. It is **not** Pri Learning, the separately operated India-focused educational technology platform.
+[Live website](https://priysharan19.github.io/prithagoras-web/) · [Exam Desk](https://priysharan19.github.io/prithagoras-web/desk.html) · [Publishing studio](https://priysharan19.github.io/prithagoras-web/studio.html)
 
-## What's built
+Prithagoras is a separate Australian education project, **not** Pri Learning (the India-focused learning app). It is not affiliated with NESA or any NSW school.
 
-- Precision-designed responsive website in native HTML, CSS and JavaScript
-- Original animated mathematical hero artwork
-- Searchable collection with subject, year, and resource-type filters
-- Keyboard-first quick search (`/` or Cmd/Ctrl+K on desktop)
-- Resource details with permanent shareable URLs (`?resource=<id>`)
-- Interactive sine transformation lab with adjustable amplitude and phase
-- Real GitHub-based publishing studio (`studio.html`) that generates a complete new `resources.json` without handling credentials
-- Automatic content integrity checks in GitHub Actions
-- No analytics, cookies, tracking, advertising network or paid features in the first release
+## The product
 
-## Resource publishing: two commits
+- **Public resource library:** actual published papers, solutions and notes pulled from `resources.json`; live search, type filters and saved bookmarks. Empty categories are hidden, not padded with placeholders.
+- **Keyboard command search:** `/` or `Cmd/Ctrl+K` searches resources and navigates to pages. Arrow keys and Enter work inside the command dialog.
+- **Resource detail links:** `?resource=<id>` opens a shareable detail view with the source document and an Exam Desk link for examinations.
+- **Exam Desk:** `desk.html?resource=<id>` reads exact exam configuration from the catalogue. Separate reading/working timers, pause/resume, question navigator, completed/flagged statuses, private per-question notes, progress tracking and JSON export.
+- **Local privacy:** saved papers, notes and session progress are stored in the browser on the student's own device. No third-party analytics, student accounts, remote submissions or automated marking.
+- **Publishing studio:** `studio.html` validates resource metadata and generates a version-controlled `resources.json` package for an authorised editor to commit. For exams, it includes actual reading/working minutes and question-section boundaries.
 
-1. Open the **Publishing studio** on the website. Fill in the details and either enter a public HTTPS resource URL or select a local PDF.
-2. Click **Generate publication package**.
-3. If you selected a PDF, **upload that PDF** to [the repository's `materials/` directory](https://github.com/Priysharan19/prithagoras-web/upload/main/materials). This action is done in GitHub, not by the studio.
-4. Copy the generated full JSON and replace the content of [`resources.json`](https://github.com/Priysharan19/prithagoras-web/edit/main/resources.json). Commit the change.
-5. GitHub Pages updates the public collection. The publishing workflow is protected by **GitHub repository permissions**. Resource metadata can be prepared without an account, but only a repository collaborator with write access can publish.
+All public pages are dependency-free HTML, CSS and JavaScript. Session logic is isolated in `session-core.mjs` so mathematical/timekeeping behaviour can be unit tested.
 
-**Important:** Do not edit `resources.json` concurrently from two open publishing-studio browser tabs; the later generated file will omit the earlier resource. Reload the studio after every publication. Every commit is versioned and reversible in GitHub.
+## Publishing a paper (GitHub permissions required)
 
-**Important:** Publishing is not a direct-to-storage upload form. The page intentionally generates metadata for a GitHub commit. No browser tokens, OAuth secrets, or unsafe fake upload acknowledgements.
+1. Open the [publishing studio](https://priysharan19.github.io/prithagoras-web/studio.html). Enter title, year, subject, description, marks and question count. For examinations enter reading and working minutes, and the number of multiple-choice questions (if any).
+2. Enter a public HTTPS file link **or** choose a local PDF. Selecting a file does **not** upload it.
+3. Generate the publication package. The studio validates the metadata and produces the complete updated `resources.json`.
+4. If a PDF was selected, upload it through the repository's [`materials/` folder](https://github.com/Priysharan19/prithagoras-web/upload/main/materials). This is a GitHub operation under your authenticated account, not the public website.
+5. Commit the generated JSON in [`resources.json`](https://github.com/Priysharan19/prithagoras-web/edit/main/resources.json). GitHub Pages publishes it when the deployment succeeds.
 
-## Quality and rights
+**Concurrency:** Reload the studio before every new publication. A package generated from an older catalogue might overwrite a newer editor's resource if manually committed without review. Git history allows recovery.
 
-- Check questions, solutions, marking and syllabus mapping independently.
-- Describe topic-specific papers honestly; do not imply every practice paper covers the full HSC course.
-- Ensure the rights to any PDF, illustration, or third-party material before publishing.
-- The current Bored of Studies link is external and the original resource may carry the former Pri Learning author label. Its detail view explicitly notes this.
-- Prithagoras is not affiliated with NESA or any NSW school.
-- Store published student-facing PDFs in `materials/`, not student submissions or personal data.
+**PDF integrity:** Ensure that the file in `materials/` matches the metadata and has the correct rights and academic review. Publication checks reject missing hosted PDFs.
 
-## Testing
+**No direct authenticated uploads:** This is not yet a one-click online CMS. It deliberately does not ask visitors to paste GitHub personal access tokens into a public site. Future instant publishing requires an authenticated server-side GitHub integration or managed CMS.
 
-No dependency install is needed for the static public site.
+## Exam Desk behaviour
+
+The first linked examination is the 2027 HSC Mathematics Advanced 100-mark practice paper: 10 multiple-choice questions and 17 extended-response questions; a 10-minute reading session and 180-minute working session. This metadata represents the paper described in the linked resource; it must be updated if the source document changes.
+
+When a student opens the desk:
+
+- The timer starts only on explicit action. Reading time ending stops at a **Ready to work** state; it does not automatically start working time.
+- Running countdowns use a deadline based on the device clock, not `setInterval` increments. Reloading or hiding the browser tab cannot slow the clock.
+- Paused countdowns retain remaining time. Starting a new attempt requires explicit Reset confirmation.
+- Question statuses (done, flagged, untouched) and notes are saved separately for each resource using a versioned localStorage key.
+- Export downloads a local JSON attempt record. It is **not** a grading result.
+- Keyboard shortcuts: Left/Right to change questions, D to mark done, F to flag, N to focus notes, ? for help (when not typing).
+
+No answers, question text or marking data are fabricated. Students open the actual PDF or external paper alongside the workspace.
+
+## File layout
+
+```text
+index.html               Public landing page, command search, library
+styles.css               Brand and responsive public site
+script.js                Search, bookmarks, resource details
+desk.html                Focused examination workspace
+desk.css                 Desktop/tablet/mobile workspace UI
+desk.js                  Student interaction, timer and local persistence
+session-core.mjs         Pure, testable session state machine
+studio.html              Editor/publication form
+studio.css               Editorial workspace styling
+studio.js                Validated publication package generator
+resources.json           Published resource source of truth
+materials/               PDF files in GitHub
+tests/                   Resource and session correctness tests
+.github/workflows/       Pull-request and main-branch validation
+```
+
+## Local testing
 
 ```bash
 node --check script.js
+node --check desk.js
+node --check session-core.mjs
 node --check studio.js
 node --test tests/*.test.mjs
 python3 -m http.server 8341
 ```
 
-Visit `http://127.0.0.1:8341`.
+Open `http://127.0.0.1:8341/`. Do not use `file://`; browsers block loading `resources.json` via file URLs.
 
-Never open `index.html` directly with `file://`: browsers block fetching `resources.json` that way.
+Desktop and mobile browser testing should cover: command search, saved filters, resource dialog and links, Exam Desk timer transitions, refresh/reload, per-question note isolation, export and the publication form. Test at 320, 390, 768 and 1440 pixels before a significant design release.
 
-## Deployment
+## Boundaries and release policy
 
-The site supports GitHub Pages from the `main` branch, repository root, with no build command. The resource index is fetched at `./resources.json` and all site assets use relative paths, so it works on GitHub Pages under `/prithagoras-web/`. GitHub Pages deploys on pushes to `main` once enabled.
-
-For future commercial tutoring services, custom domains, secure payments, student login or private upload storage, build a separate authenticated backend and use appropriate commercial hosting. The current site is a free public resource library and contains no paid checkout.
-
-## Structure
-
-```
-index.html        Public website
-script.js         Search, resource dialogs and interactive mathematics
-styles.css        Responsive design system
-studio.html       Publisher workspace
-studio.js         Export of complete updated resource metadata
-studio.css        Publisher styling
-resources.json    Source of truth for all public resource entries
-materials/        Hosted downloadable PDFs
-tests/            Static integrity checks
-```
+- No fabricated resources, fake user counts or false syllabus certification.
+- Do not present a school-specific Task 1 paper as an official whole-course HSC trial.
+- The first external Bored of Studies file may still bear its old Pri Learning attribution. The resource disclaimer makes that provenance explicit until the PDF is updated.
+- The project currently relies on GitHub Pages for free **public resources**, not payment or student accounts.
+- Add an appropriate authenticated backend, privacy policy and hosting arrangements before introducing paid tutoring subscriptions or personal-data collection.

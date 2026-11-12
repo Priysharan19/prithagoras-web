@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d11"><meta name="description" content="Prithagoras Exam Desk — a private, focused workspace for timed HSC Mathematics Advanced practice.">
+<title>Exam Desk — Prithagoras</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;550;600;650;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./desk.css"><script src="./desk.js" type="module"></script>
+</head>
+<body>
+<a class="skip-link" href="#desk-main">Skip to workspace</a>
+<div class="desk-shell">
+  <aside class="desk-rail" aria-label="Workspace navigation">
+    <a class="desk-brand" href="./" aria-label="Prithagoras home"><span class="brand-icon">π</span><span>prithagoras<span class="dot">.</span></span></a>
+    <div class="rail-label">STUDENT WORKSPACE</div>
+    <nav class="rail-nav"><a href="./" class="rail-item"><span class="rail-icon">⌂</span> Library <span class="rail-arrow">↗</span></a><a class="rail-item active" href="./desk.html"><span class="rail-icon">▦</span> Exam desk <span class="rail-active"></span></a></nav>
+    <div class="rail-divider"></div>
+    <div class="rail-label">CURRENT MATERIAL</div>
+    <div class="rail-paper"><div class="paper-label">PAPER / <span id="rail-year">2027</span></div><strong id="rail-title">Loading examination…</strong><div class="rail-meta" id="rail-meta">MATHEMATICS</div><a id="rail-source" class="rail-source" href="./" target="_blank" rel="noopener noreferrer">Open question paper <span>↗</span></a></div>
+    <div class="rail-note"><span class="note-dot"></span><div><strong>Private by default</strong><p>Notes and progress remain in this browser. No account, tracking or server submission.</p></div></div>
+  </aside>
+
+  <main id="desk-main" class="desk-main">
+    <header class="desk-topbar"><div class="breadcrumb"><a href="./">Library</a><span>/</span><span>Exam Desk</span><span>/</span><strong id="breadcrumb-year">2027</strong></div><div class="topbar-right"><span class="autosave-indicator"><span class="save-dot"></span><span id="save-message">Stored locally</span></span><button class="topbar-shortcut" id="shortcut-button" type="button" title="Show keyboard shortcuts">? <span>Shortcuts</span></button></div></header>
+    <div class="desk-content">
+      <div class="desk-intro"><div class="eyebrow"><span class="status-pulse"></span> PRITHAGORAS / EXAMINATION WORKSPACE <span class="rev">REV 01</span></div><h1>Focus on <span>the work.</span></h1><p id="desk-description">Your time, questions and private working notes in one focused space. Open the paper alongside this desk and attempt it independently.</p></div>
+
+      <div class="desk-grid">
+        <section class="timer-panel" aria-labelledby="session-heading">
+          <div class="panel-header"><div class="panel-index">01 / SESSION</div><div class="session-status" id="session-status">READY TO BEGIN</div></div>
+          <div class="timer-body">
+            <h2 id="session-heading">Practice session</h2>
+            <p class="session-subtitle" id="session-subtitle">Start with reading time, then move to the working session when you're ready.</p>
+            <div class="timer-unit"><div class="timer-display" id="timer-display" role="timer" aria-live="off">03:00:00</div><div class="timer-side"><span id="timer-label">WORKING TIME</span><span id="timer-mode">NOT STARTED</span></div></div>
+            <div class="phase-track" aria-label="Session phases"><div id="reading-phase" class="phase active"><span class="phase-icon">01</span><span>Reading</span><small id="reading-duration">10 min</small></div><div class="phase-line"></div><div id="working-phase" class="phase"><span class="phase-icon">02</span><span>Working</span><small id="working-duration">180 min</small></div><div class="phase-line"></div><div id="review-phase" class="phase"><span class="phase-icon">03</span><span>Review</span></div></div>
+            <div class="session-actions"><button type="button" class="button primary" id="start-button">Start reading time <span>↗</span></button><button type="button" class="button secondary" id="pause-button" hidden>Pause</button><button type="button" class="button secondary" id="skip-button" hidden>Start working now →</button><button type="button" class="button secondary" id="finish-button" hidden>Finish attempt</button></div>
+            <div class="timer-footnote"><span>⊙</span><span>Timer uses your device clock and survives a page refresh. Keep this tab available during the exam.</span></div>
+          </div>
+        </section>
+
+        <section class="overview-panel" aria-labelledby="overview-heading">
+          <div class="panel-header"><div class="panel-index">02 / PROGRESS</div><div class="panel-aside">LIVE WORKSPACE</div></div>
+          <div class="overview-body"><h2 id="overview-heading">Question overview</h2><p>Track what you've attempted. This is not automated marking.</p>
+            <div class="progress-display"><div class="progress-ring" id="progress-ring" style="--percent:0"><div class="progress-ring-inner"><strong id="progress-count">0</strong><span>OF <span id="progress-total">27</span></span></div></div><div class="progress-stats"><div><span class="key-dot completed"></span><span>Completed</span><strong id="completed-count">0</strong></div><div><span class="key-dot flagged"></span><span>To revisit</span><strong id="flagged-count">0</strong></div><div><span class="key-dot unseen"></span><span>Untouched</span><strong id="untouched-count">27</strong></div></div></div>
+            <div class="overview-actions"><button type="button" id="export-button">Export attempt <span>↓</span></button><button type="button" id="reset-button">Reset workspace <span>↺</span></button></div>
+          </div>
+        </section>
+
+        <section class="question-panel" aria-labelledby="questions-heading">
+          <div class="panel-header"><div class="panel-index">03 / QUESTIONS</div><div class="panel-aside">SELECT TO EDIT</div></div>
+          <div class="question-body"><div class="question-heading"><h2 id="questions-heading">Question navigator</h2><div class="question-legend"><span><i class="key-dot completed"></i> Done</span><span><i class="key-dot flagged"></i> Flagged</span></div></div><div id="question-groups" class="question-groups" aria-label="Questions"></div></div>
+        </section>
+
+        <section class="notes-panel" aria-labelledby="notes-heading">
+          <div class="panel-header"><div class="panel-index">04 / NOTES</div><div class="panel-aside" id="note-question-label">QUESTION 01</div></div>
+          <div class="notes-body"><div class="notes-headline"><div><h2 id="notes-heading">Working notes</h2><p>For your own calculations, observations or mistakes to revisit.</p></div><div class="notes-current" id="notes-question">Q01</div></div>
+            <textarea id="working-notes" aria-label="Private notes for selected question" maxlength="5000" spellcheck="true" placeholder="Start typing your working notes…"></textarea><div class="notes-footer"><span>Autosaved in this browser</span><span id="note-count">0 / 5000</span></div>
+            <div class="notes-actions"><button type="button" id="mark-done" class="button done-button">Mark complete <span>✓</span></button><button type="button" id="mark-flag" class="button flag-button">Flag for review <span>⚑</span></button><button type="button" id="clear-question" class="button clear-button">Clear status</button></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="desk-footer"><span>PRITHAGORAS / SELF-DIRECTED PRACTICE</span><span>NO AUTOGRADING · NO SUBMISSIONS · NO ACCOUNT</span><a href="./">Return to library ↗</a></div>
+    </div>
+  </main>
+</div>
+<dialog id="shortcuts-dialog" class="shortcuts-dialog" aria-labelledby="shortcuts-title"><div class="dialog-heading"><h2 id="shortcuts-title">Keyboard shortcuts</h2><button type="button" id="close-shortcuts" aria-label="Close shortcuts">✕</button></div><div class="shortcut-row"><span>Move between questions</span><kbd>←</kbd><kbd>→</kbd></div><div class="shortcut-row"><span>Toggle completed</span><kbd>D</kbd></div><div class="shortcut-row"><span>Toggle flag</span><kbd>F</kbd></div><div class="shortcut-row"><span>Focus note editor</span><kbd>N</kbd></div><div class="shortcut-row"><span>Show shortcuts</span><kbd>?</kbd></div><p>Shortcuts are disabled while you're typing in a field.</p></dialog>
+<div class="desk-toast" id="desk-toast" aria-live="polite" role="status"></div>
+</body>
+</html>
