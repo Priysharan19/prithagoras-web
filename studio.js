@@ -5,8 +5,8 @@ let originalIndex = null;
 let exportIndex = null;
 function toast(message){const t=$("#toast");t.textContent=message;t.classList.add("visible");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("visible"),2600);}
 function preview(){
-  $("#preview-title").textContent=$("#r-title").value.trim()||"Your next great resource.";
-  $("#preview-description").textContent=$("#r-description").value.trim()||"An inspiring mathematical challenge starts with a well-crafted question.";
+  $("#preview-title").textContent=$("#r-title").value.trim()||"Untitled resource";
+  $("#preview-description").textContent=$("#r-description").value.trim()||"Resource description will appear here.";
   $("#preview-kicker").textContent="YEAR 12 / "+($("#r-year").value||"2027")+" / "+$("#r-type").selectedOptions[0].text.toUpperCase();
   $("#preview-marks").textContent=($("#r-marks").value||"0")+" MARKS";
   $("#preview-subject").textContent=$("#r-subject").value.toUpperCase().slice(0,24);

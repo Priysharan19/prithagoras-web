@@ -1,59 +1,83 @@
 <!doctype html>
 <html lang="en-AU">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="theme-color" content="#080a0f"/><meta name="robots" content="noindex, nofollow"/>
-<title>Publishing Studio — Prithagoras</title>
-<link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="./styles.css"/><link rel="stylesheet" href="./studio.css"/>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0e1116">
+<title>Publishing studio — Prithagoras</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./studio.css">
 <script src="./studio.js" defer></script>
 </head>
-<body>
-<div class="studio-shell">
-  <aside class="studio-rail">
-    <a class="identity" href="./"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M7 25V7h11c6 0 9 3 9 8s-3 8-9 8H7" stroke="currentColor" stroke-width="2.6"/><path d="M13 7v18M7 16h13" stroke="currentColor" stroke-width="1.5" opacity=".52"/></svg></span><span class="brand-name">prithagoras<span class="brand-period">.</span></span></a>
-    <div class="studio-rail-label">PUBLISHER WORKSPACE</div>
-    <nav class="studio-rail-nav" aria-label="Publishing workflow"><a class="selected" href="#compose"><span>◇</span> Compose material</a><a href="#publication"><span>↗</span> Publish to GitHub</a><a href="./"><span>⌂</span> View public site</a></nav>
-    <div class="studio-rail-note"><div>GIT-BASED PUBLISHING</div><p>Your resources are versioned in GitHub. No account credentials are stored in this browser.</p></div>
-  </aside>
-  <main class="studio-main" id="compose">
-    <header class="studio-topbar"><div><span class="studio-breadcrumb">PRITHAGORAS</span><span class="studio-breadcrumb-slash">/</span> Publishing studio</div><a href="./" class="studio-site-link">View live website ↗</a></header>
-    <div class="studio-content">
-      <div class="studio-kicker"><span class="green-light"></span> CONTENT WORKSPACE / 001</div>
-      <h1>Publish something <em>worth learning.</em></h1>
-      <p class="studio-description">Create a resource listing, attach a PDF through GitHub, and publish it to the public library. A real version-controlled workflow, not a browser-only draft.</p>
-      <div class="studio-steps"><div class="step active"><b>01</b><span>Prepare</span></div><div class="step"><b>02</b><span>Generate</span></div><div class="step"><b>03</b><span>Commit & publish</span></div></div>
-      <div class="editor-layout">
-        <section class="editor-panel" aria-labelledby="material-heading">
-          <div class="panel-head"><div><div class="panel-overline">NEW RESOURCE</div><h2 id="material-heading">Material details</h2></div><span class="panel-required">* Required</span></div>
+<body class="studio-page">
+  <header class="header"><div class="container header-inner">
+    <a href="./" class="wordmark" aria-label="Prithagoras home"><span class="logo-glyph" aria-hidden="true">π</span><span>prithagoras<span class="brand-dot">.</span></span></a>
+    <div class="studio-header-label">PUBLISHING STUDIO</div>
+    <a class="studio-header-link" href="./">Back to website <span aria-hidden="true">↗</span></a>
+  </div></header>
+  <main class="studio-page-main">
+    <div class="container">
+      <div class="studio-intro">
+        <div class="overline">PRITHAGORAS <span class="divider-tick">/</span> EDITORIAL</div>
+        <h1>Publish a <em>resource.</em></h1>
+        <p>Prepare your material here. Publication is version-controlled in GitHub, so each release can be reviewed and corrected.</p>
+      </div>
+      <div class="studio-process"><span class="active"><b>01</b> Enter details</span><span><b>02</b> Generate index</span><span><b>03</b> Commit on GitHub</span></div>
+      <div class="studio-grid">
+        <section class="editor-panel" aria-labelledby="resource-details">
+          <div class="panel-heading"><div><div class="overline">NEW MATERIAL</div><h2 id="resource-details">Resource details</h2></div><span>* Required</span></div>
           <form id="resource-form" novalidate>
-            <div class="form-field"><label for="r-title">Resource title *</label><input id="r-title" required maxlength="130" placeholder="e.g. HSC Mathematics Advanced — Topic Challenge 01"/><p>The title students will see in search and in the library.</p></div>
-            <div class="field-row"><div class="form-field"><label for="r-type">Material type *</label><select id="r-type"><option value="exam">Practice examination</option><option value="solutions">Worked solutions</option><option value="notes">Study notes</option></select></div><div class="form-field"><label for="r-year">HSC year *</label><input id="r-year" type="number" min="2024" max="2035" value="2027" required/></div></div>
-            <div class="form-field"><label for="r-subject">Subject *</label><input id="r-subject" value="Mathematics Advanced" required maxlength="80"/></div>
-            <div class="form-field"><label for="r-description">Description *</label><textarea id="r-description" rows="4" minlength="25" maxlength="600" required placeholder="Describe exactly what students will practise and learn…"></textarea></div>
-            <div class="field-row"><div class="form-field"><label for="r-marks">Total marks</label><input id="r-marks" type="number" min="0" max="1000" value="100"/></div><div class="form-field"><label for="r-questions">Number of questions</label><input id="r-questions" type="number" min="0" max="500" value="20"/></div></div>
-            <div class="field-row"><div class="form-field"><label for="r-duration">Suggested duration</label><input id="r-duration" value="3 hours" maxlength="60"/></div><div class="form-field"><label for="r-tags">Tags, comma separated</label><input id="r-tags" value="2027 HSC, Practice paper" maxlength="180"/></div></div>
-            <div class="form-field"><label for="r-url">Resource URL (optional if using a PDF)</label><input id="r-url" type="url" placeholder="https://example.org/resource.pdf"/><p>Use a valid HTTPS link if the PDF is hosted externally, such as Bored of Studies.</p></div>
-            <div class="upload-zone"><label for="r-file">Or select a PDF to upload via GitHub</label><input id="r-file" type="file" accept=".pdf,application/pdf"/><p id="file-status">Files are selected locally, then you upload them to the GitHub repository in the final step. This studio does not transfer files directly.</p></div>
-            <div id="form-errors" class="form-errors" role="alert" hidden></div>
-            <button class="studio-primary" type="submit">Generate publication package <span>↗</span></button>
+            <div class="form-field"><label for="r-title">Resource title *</label><input id="r-title" type="text" maxlength="130" required placeholder="e.g. Mathematics Advanced — Trigonometry Practice 01"><small>Keep it specific. Students should know exactly what they are opening.</small></div>
+            <div class="field-row">
+              <div class="form-field"><label for="r-type">Material type *</label><select id="r-type"><option value="exam">Practice examination</option><option value="solutions">Worked solutions</option><option value="notes">Study notes</option></select></div>
+              <div class="form-field"><label for="r-year">HSC year *</label><input id="r-year" type="number" min="2024" max="2035" value="2027" required></div>
+            </div>
+            <div class="form-field"><label for="r-subject">Subject *</label><input id="r-subject" type="text" value="Mathematics Advanced" maxlength="80" required></div>
+            <div class="form-field"><label for="r-description">Description *</label><textarea id="r-description" minlength="25" maxlength="600" rows="4" placeholder="What topics, skills and question types does this resource cover?" required></textarea></div>
+            <div class="field-row">
+              <div class="form-field"><label for="r-marks">Total marks</label><input id="r-marks" type="number" min="0" max="1000" value="100"></div>
+              <div class="form-field"><label for="r-questions">Number of questions</label><input id="r-questions" type="number" min="0" max="500" value="20"></div>
+            </div>
+            <div class="field-row">
+              <div class="form-field"><label for="r-duration">Suggested duration</label><input id="r-duration" type="text" value="3 hours" maxlength="60"></div>
+              <div class="form-field"><label for="r-tags">Tags (comma separated)</label><input id="r-tags" type="text" value="2027 HSC, Practice paper" maxlength="180"></div>
+            </div>
+            <div class="form-field"><label for="r-url">External resource link</label><input id="r-url" type="url" placeholder="https://example.org/resource.pdf"><small>Optional if uploading a PDF directly to the repository.</small></div>
+            <div class="upload-zone"><label for="r-file">PDF file</label><input id="r-file" type="file" accept=".pdf,application/pdf"><p id="file-status">Select a PDF if it will be hosted in this site's GitHub repository. The studio prepares metadata; the actual file is uploaded on GitHub in the final step.</p></div>
+            <div id="form-errors" class="form-errors" hidden role="alert"></div>
+            <button type="submit" class="studio-primary">Generate publication package <span>↗</span></button>
           </form>
         </section>
-        <aside class="editor-side"><div class="editor-preview"><div class="panel-overline">LIVE PREVIEW / MATERIAL CARD</div><div class="preview-art"><span>PR / RESOURCE</span><strong>∑∞</strong><small>ORIGINAL MATHEMATICS</small></div><span class="preview-kicker" id="preview-kicker">YEAR 12 / 2027 / EXAM</span><h3 id="preview-title">Your next great resource.</h3><p id="preview-description">An inspiring mathematical challenge starts with a well-crafted question.</p><div class="preview-meta"><span id="preview-marks">100 MARKS</span><span id="preview-subject">MATHEMATICS ADVANCED</span></div></div><div class="studio-tip"><span>✳ A NOTE ON QUALITY</span><p>Check every solution, marking rubric and syllabus claim independently before publication. The library is intentionally curated.</p></div></aside>
+        <aside class="studio-side">
+          <div class="studio-preview">
+            <div class="panel-heading"><div class="overline">PUBLIC VIEW</div><span>LIVE PREVIEW</span></div>
+            <div class="mini-paper" aria-hidden="true"><div class="mini-paper-top"><span>PRITHAGORAS</span><span>2027</span></div><span class="mini-paper-label">INDEPENDENT STUDY MATERIAL</span><strong id="preview-subject">MATHEMATICS ADVANCED</strong><div class="mini-paper-base"><span>STUDY RESOURCE</span><span id="preview-marks">100 MARKS</span></div></div>
+            <div class="preview-kicker" id="preview-kicker">YEAR 12 / 2027 / EXAM</div>
+            <h3 id="preview-title">Your resource title</h3>
+            <p id="preview-description">Resource description will appear here.</p>
+          </div>
+          <div class="editor-note"><strong>Before publishing</strong><p>Check the mathematics, worked answers, marking and syllabus scope. This publishing tool does not validate the academic content of PDFs.</p></div>
+        </aside>
       </div>
-      <section class="publication-panel" id="publication" hidden>
-        <div class="panel-overline">PUBLICATION PACKAGE READY</div><h2>Two quick commits. <span>Then you're live.</span></h2><p>The updated resource index has been generated from the current library. Publishing requires your authorised GitHub account.</p>
-        <ol><li id="upload-step">If you selected a PDF, upload it to the repository's <code>materials/</code> folder. Keep the filename exactly as selected.</li><li>Copy the generated JSON and replace the repository's <code>resources.json</code> contents. Commit the changes to <code>main</code>.</li><li>GitHub Pages rebuilds the site from your committed files. Refresh the public library after the Pages deployment completes.</li></ol>
-        <div class="publish-actions"><a href="https://github.com/Priysharan19/prithagoras-web/upload/main/materials" target="_blank" rel="noopener noreferrer" class="studio-action">1. Upload PDF on GitHub ↗</a><a href="https://github.com/Priysharan19/prithagoras-web/edit/main/resources.json" target="_blank" rel="noopener noreferrer" class="studio-action">2. Edit resource index ↗</a></div>
-        <label class="json-label" for="generated-json">Generated resources.json</label><textarea id="generated-json" readonly rows="12" spellcheck="false"></textarea>
-        <div class="publish-actions"><button type="button" id="copy-json" class="studio-primary">Copy complete JSON ⧉</button><button type="button" id="download-json" class="studio-action">Download resources.json ↓</button></div>
-        <p class="studio-caution">Security: publishing permissions stay with GitHub. No tokens or passwords are requested by this site. Anyone may draft a package, but only authorised repository collaborators can publish it.</p>
+      <section id="publication" class="publication-panel" hidden aria-labelledby="publication-title">
+        <div class="overline">NEXT STEP / GITHUB</div>
+        <h2 id="publication-title">Ready to publish.</h2>
+        <p>Your updated catalogue file is prepared. Only an authorised GitHub collaborator can commit it.</p>
+        <ol>
+          <li id="upload-step">If you selected a PDF, upload it to the repository's <code>materials/</code> folder, keeping the filename unchanged.</li>
+          <li>Copy the complete generated JSON below and replace the contents of <code>resources.json</code> on GitHub.</li>
+          <li>Commit your changes. The public site updates when GitHub Pages finishes deploying.</li>
+        </ol>
+        <div class="publish-actions"><a class="studio-action" href="https://github.com/Priysharan19/prithagoras-web/upload/main/materials" target="_blank" rel="noopener noreferrer">Upload PDF on GitHub ↗</a><a class="studio-action" href="https://github.com/Priysharan19/prithagoras-web/edit/main/resources.json" target="_blank" rel="noopener noreferrer">Edit resources.json ↗</a></div>
+        <label for="generated-json">Complete generated resources.json</label>
+        <textarea id="generated-json" rows="12" spellcheck="false" readonly></textarea>
+        <div class="publish-actions"><button type="button" class="studio-primary" id="copy-json">Copy complete JSON</button><button type="button" class="studio-action" id="download-json">Download JSON ↓</button></div>
+        <p class="publish-warning">This studio does not upload documents automatically or store GitHub credentials. If another editor has published since you opened this page, reload and regenerate before committing.</p>
       </section>
     </div>
   </main>
-</div>
-<div class="toast" id="toast" role="status"></div>
+  <footer class="studio-footer"><div class="container"><span>PRITHAGORAS / PUBLISHING STUDIO</span><a href="./">Return to library ↗</a></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

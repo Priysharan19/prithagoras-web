@@ -30,6 +30,7 @@ test('catalog schema is valid and resource IDs are unique',()=>{
 });
 test('site uses no demo publishing claims or token requests',()=>{
   assert.ok(!read('index.html').includes('hello@prithagoras.com.au'));
-  assert.ok(read('studio.html').includes('This studio does not transfer files directly'));
+  assert.ok(read('studio.html').includes('This studio does not upload documents automatically'));
+  assert.ok(read('studio.html').includes('actual file is uploaded on GitHub'));
   assert.ok(!/personal access token|github_token|ghp_/i.test(read('studio.js')));
 });
