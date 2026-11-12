@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-11-12",
+  "resources": [
+    {
+      "id": "2027-mathematics-advanced-assessment-1",
+      "title": "2027 HSC Mathematics Advanced — 100-Mark Practice Examination",
+      "subtitle": "Assessment Task 1 · Challenging original paper",
+      "description": "An original, challenging HSC-style Mathematics Advanced practice paper designed around an early Year 12 assessment scope. Includes 10 multiple-choice questions and 17 extended-response questions.",
+      "type": "exam",
+      "subject": "Mathematics Advanced",
+      "year": 2027,
+      "grade": "Year 12",
+      "marks": 100,
+      "duration": "3 hours",
+      "questions": 27,
+      "releaseDate": "2026-11-12",
+      "tags": [
+        "Practice examination",
+        "2027 HSC",
+        "100 marks"
+      ],
+      "topic": "Mathematics Advanced",
+      "url": "https://boredofstudies.org/resources/2027-hsc-mathematics-advanced-ultimate-100-mark-assessment-1-practice-paper.21171/",
+      "source": "Bored of Studies",
+      "availability": "external",
+      "disclaimer": "Independent practice paper; not affiliated with NESA or any school. The first uploaded version used the Pri Learning name. It is not an official examination. Access to solutions depends on the attachments currently available on Bored of Studies."
+    }
+  ]
+}
