@@ -72,3 +72,5 @@
 
 /* Strong contrast for the shared dark website header. */
 .studio-page .header .wordmark{color:#f4f3ee}
+
+.exam-details[hidden]{display:none}

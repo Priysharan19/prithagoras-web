@@ -25,17 +25,29 @@ async function init(){
     originalIndex=index;
   }catch(e){$("#form-errors").hidden=false;$("#form-errors").textContent="Cannot load live resources.json. Open this studio through the hosted website, not as a local file. "+e.message;$("#resource-form").querySelector("button[type=submit]").disabled=true;return;}
   $("#resource-form").addEventListener("input",preview);
+  const updateExamFields=()=>{$("#exam-details").hidden=$("#r-type").value!=="exam";};
+  $("#r-type").addEventListener("change",updateExamFields);
+  updateExamFields();
   $("#r-file").addEventListener("change",checkFile);
   $("#resource-form").addEventListener("submit",event=>{
     event.preventDefault();
     const title=$("#r-title").value.trim(),description=$("#r-description").value.trim(),
       year=Number($("#r-year").value),subject=$("#r-subject").value.trim(),
-      externalUrl=$("#r-url").value.trim(),file=$("#r-file").files?.[0];
+      externalUrl=$("#r-url").value.trim(),file=$("#r-file").files?.[0],
+      type=$("#r-type").value,questionCount=Number($("#r-questions").value),
+      readingMinutes=Number($("#r-reading").value),workingMinutes=Number($("#r-working").value),
+      mcqCount=Number($("#r-mcq").value);
     const errors=[];
     if(title.length<8)errors.push("Please enter a descriptive title (at least 8 characters).");
     if(description.length<25)errors.push("Please write at least 25 characters in the description.");
     if(subject.length<3)errors.push("Please enter a subject name.");
     if(!Number.isInteger(year)||year<2024||year>2035)errors.push("Choose an HSC year between 2024 and 2035.");
+    if(type==="exam"){
+      if(!Number.isInteger(questionCount)||questionCount<1||questionCount>200)errors.push("Exam Desk supports 1–200 questions per paper.");
+      if(!Number.isInteger(readingMinutes)||readingMinutes<0||readingMinutes>90)errors.push("Reading time must be 0–90 minutes.");
+      if(!Number.isInteger(workingMinutes)||workingMinutes<1||workingMinutes>600)errors.push("Working time must be 1–600 minutes.");
+      if(!Number.isInteger(mcqCount)||mcqCount<0||mcqCount>questionCount)errors.push("Multiple-choice count must be between 0 and the total number of questions.");
+    }
     if(!externalUrl && !file)errors.push("Supply either an HTTPS resource link or a PDF to upload.");
     if(externalUrl && !/^https:\/\/[^\s]+$/i.test(externalUrl))errors.push("The resource link must begin with https://.");
     if(file){
@@ -49,9 +61,9 @@ async function init(){
     errorArea.hidden=true;
     const record={
       id,title,subtitle:"Independent HSC learning resource",description,
-      type:$("#r-type").value,subject,year,grade:"Year 12",
-      marks:Number($("#r-marks").value)||0,questions:Number($("#r-questions").value)||0,
-      duration:$("#r-duration").value.trim()||"Self-paced",
+      type,subject,year,grade:"Year 12",
+      marks:Number($("#r-marks").value)||0,questions:questionCount||0,
+      duration:type==="exam"?(workingMinutes%60===0?workingMinutes/60+" hours":workingMinutes+" minutes"):"Self-paced",
       releaseDate:new Date().toISOString().slice(0,10),
       tags:$("#r-tags").value.split(",").map(s=>s.trim()).filter(Boolean).slice(0,8),
       topic:subject,
@@ -60,6 +72,14 @@ async function init(){
       availability:externalUrl?"external":"hosted",
       disclaimer:"Independent educational resource. Not an official NESA or school examination."
     };
+    if(type==="exam"){
+      record.readingMinutes=readingMinutes;
+      record.workingMinutes=workingMinutes;
+      record.sections=mcqCount>0 && mcqCount<questionCount
+        ?[{label:"Section I",start:1,end:mcqCount,format:"Multiple choice"},
+          {label:"Section II",start:mcqCount+1,end:questionCount,format:"Extended response"}]
+        :[{label:"Questions",start:1,end:questionCount,format:mcqCount===questionCount?"Multiple choice":""}];
+    }
     exportIndex={...originalIndex,updated:new Date().toISOString().slice(0,10),resources:[record,...originalIndex.resources]};
     $("#generated-json").value=JSON.stringify(exportIndex,null,2)+"\n";
     $("#publication").hidden=false;
