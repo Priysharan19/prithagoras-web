@@ -9,7 +9,9 @@ const safeUrl=value=>{
   } catch {return "";}
 };
 
-let resources=[],activeFilter="all",query="",saved=new Set(),commandIndex=0;
+let resources=[],activeFilter="all",query="",saved=new Set(),commandIndex=0,deskIds=null;
+// The Exam Desk reads resources.json; a platform resource is offered there only if the file has it too.
+const deskReady=r=>r.type==="exam"&&(!deskIds||deskIds.has(r.id));
 const BOOKMARK_KEY="prithagoras:saved:v1";
 function loadSaved(){
   try{
@@ -50,7 +52,7 @@ function updateFilterState(){
 function resourceCard(r){
   const tags=(r.tags||[]).slice(0,3).map(t=>`<span>${escapeHTML(t)}</span>`).join("");
   const isSaved=saved.has(r.id);
-  const exam=r.type==="exam";
+  const exam=deskReady(r);
   return `<article class="resource-card" data-resource-card="${escapeHTML(r.id)}">
     <div class="resource-cover" aria-hidden="true">
       <div class="resource-cover-head"><span>PRITHAGORAS</span><span>${escapeHTML(r.year)}</span></div>
@@ -102,7 +104,7 @@ function openDetail(id,updateHistory=false){
     <div class="detail-data"><div><strong>${escapeHTML(r.marks||"—")}</strong><span>MARKS</span></div><div><strong>${escapeHTML(r.questions||"—")}</strong><span>QUESTIONS</span></div><div><strong>${escapeHTML(r.duration||"—")}</strong><span>DURATION</span></div></div>
     <div class="detail-actions">
       ${link?`<a target="_blank" rel="noopener noreferrer" href="${escapeHTML(link)}">Open resource ↗</a>`:""}
-      ${r.type==="exam"?`<a href="./desk.html?resource=${encodeURIComponent(r.id)}">Enter Exam Desk →</a>`:""}
+      ${deskReady(r)?`<a href="./desk.html?resource=${encodeURIComponent(r.id)}">Enter Exam Desk →</a>`:""}
       <button type="button" id="copy-resource">Copy share link ⧉</button>
     </div>
     <p class="detail-note">${escapeHTML(r.disclaimer||"Independent resource, not an official NESA or school examination.")}</p>
@@ -172,10 +174,24 @@ function openCommand(){
 }
 async function loadResources(){
   try{
-    const response=await fetch("./resources.json",{cache:"no-store"});
-    if(!response.ok)throw new Error("HTTP "+response.status);
-    const data=await response.json();
-    if(!Array.isArray(data.resources))throw new Error("Invalid resource index");
+    // With no APP_ORIGIN (config.js) this is the committed file only and no
+    // other origin is contacted; the platform module is not even requested.
+    const appOrigin=String(window.APP_ORIGIN||"").trim();
+    let data;
+    if(appOrigin){
+      const core=await import("./catalogue-core.mjs");
+      const origin=core.cleanAppOrigin(appOrigin);
+      const link=$("#app-signin");
+      if(origin&&link){link.href=origin;link.hidden=false;}
+      data=await core.loadCatalogue({appOrigin,fetchFn:(url,options)=>fetch(url,options)});
+      if(data.source==="platform")deskIds=new Set((data.file.resources||[]).filter(r=>r.type==="exam").map(r=>r.id));
+    }else{
+      const response=await fetch("./resources.json",{cache:"no-store"});
+      if(!response.ok)throw new Error("HTTP "+response.status);
+      const file=await response.json();
+      if(!Array.isArray(file.resources))throw new Error("Invalid resource index");
+      data={resources:file.resources,updated:file.updated};
+    }
     resources=data.resources.filter(r=>r.id&&r.title&&safeUrl(r.url)).sort((a,b)=>String(b.releaseDate||"").localeCompare(String(a.releaseDate||"")));
     $("#library-updated").textContent=data.updated||"—";
     updateFilterState();renderLibrary();

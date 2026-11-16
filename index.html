@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;550;600;650;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css"><script src="./script.js" defer></script>
+<link rel="stylesheet" href="./styles.css"><script src="./config.js"></script><script src="./script.js" defer></script>
 <title>Prithagoras — Made for the harder questions</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
   <div class="container header-inner">
     <a href="./" class="wordmark" aria-label="Prithagoras home"><span class="logo-glyph" aria-hidden="true">π</span><span>prithagoras<span class="brand-dot">.</span></span></a>
     <nav class="main-nav" id="main-nav" aria-label="Primary navigation"><a href="#library">Library</a><a href="#workspace">Exam Desk</a><a href="#principles">Approach</a></nav>
-    <div class="nav-actions"><button id="open-search" class="search-trigger" type="button" aria-label="Open search"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span>Search</span><kbd>⌘ K</kbd></button><a class="nav-library" href="./desk.html">Open desk <span>↗</span></a><button type="button" id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation"><span></span><span></span></button></div>
+    <div class="nav-actions"><button id="open-search" class="search-trigger" type="button" aria-label="Open search"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span>Search</span><kbd>⌘ K</kbd></button><a class="nav-library" href="./desk.html">Open desk <span>↗</span></a><a class="nav-library" id="app-signin" href="#" hidden>Sign in <span>↗</span></a><button type="button" id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation"><span></span><span></span></button></div>
   </div>
 </header>
 <main>
