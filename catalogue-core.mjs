@@ -81,14 +81,19 @@ export async function loadCatalogue({ appOrigin = "", fetchFn, timeoutMs = 6000 
   const fromFile = await file();
   if (!origin) return { source: "file", file: fromFile, resources: fromFile.resources, updated: fromFile.updated || "" };
   try {
+    // One deadline for the whole exchange, headers AND body: a platform that
+    // sends headers and then stalls must not leave the library pending.
     const controller = typeof AbortController === "function" ? new AbortController() : null;
-    const timer = controller ? setTimeout(() => controller.abort(), timeoutMs) : null;
-    let response;
-    try {
-      response = await fetchFn(origin + "/v1/public/resources", { mode: "cors", credentials: "omit", cache: "no-cache", headers: { Accept: "application/json" }, signal: controller?.signal });
-    } finally { if (timer) clearTimeout(timer); }
-    if (!response.ok) throw new Error("HTTP " + response.status);
-    const resources = normalizePlatformReply(await response.json());
+    let timer;
+    const deadline = new Promise((_, reject) => { timer = setTimeout(() => { controller?.abort(); reject(new Error("timeout")); }, timeoutMs); });
+    const exchange = (async () => {
+      const response = await fetchFn(origin + "/v1/public/resources", { mode: "cors", credentials: "omit", cache: "no-cache", headers: { Accept: "application/json" }, signal: controller?.signal });
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return normalizePlatformReply(await response.json());
+    })();
+    exchange.catch(() => {});
+    let resources;
+    try { resources = await Promise.race([exchange, deadline]); } finally { clearTimeout(timer); }
     if (!resources.length) throw new Error("no usable resources");
     const newest = resources.map(r => r.releaseDate).sort().pop();
     return { source: "platform", file: fromFile, resources, updated: newest || fromFile.updated || "" };

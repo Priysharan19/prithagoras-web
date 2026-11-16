@@ -71,6 +71,14 @@ test('every platform failure falls back to the file, never an empty library', as
   }
 });
 
+test('a platform that sends headers and stalls the body falls back after the deadline', async () => {
+  const stalled = { ok: true, status: 200, json: () => new Promise(() => {}) };
+  const started = Date.now();
+  const out = await loadCatalogue({ appOrigin: 'https://app.example', timeoutMs: 50, fetchFn: stub({ './resources.json': fileReply, 'https://app.example/v1/public/resources': stalled }) });
+  assert.equal(out.source, 'file'); assert.equal(out.resources.length, file.resources.length);
+  assert.ok(Date.now() - started < 2000, 'returned promptly');
+});
+
 test('the shipped site has no app address: no sign-in link shown, no cross-origin fetch, nothing new tracked', () => {
   assert.match(read('config.js'), /window\.APP_ORIGIN = "";/);
   assert.match(read('index.html'), /id="app-signin"[^>]*\bhidden\b/);

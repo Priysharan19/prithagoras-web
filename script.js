@@ -179,13 +179,18 @@ async function loadResources(){
     const appOrigin=String(window.APP_ORIGIN||"").trim();
     let data;
     if(appOrigin){
-      const core=await import("./catalogue-core.mjs");
-      const origin=core.cleanAppOrigin(appOrigin);
-      const link=$("#app-signin");
-      if(origin&&link){link.href=origin;link.hidden=false;}
-      data=await core.loadCatalogue({appOrigin,fetchFn:(url,options)=>fetch(url,options)});
-      if(data.source==="platform")deskIds=new Set((data.file.resources||[]).filter(r=>r.type==="exam").map(r=>r.id));
-    }else{
+      // The platform branch has its own fallback: if the module cannot load or
+      // anything in it throws, the committed file below is used as before.
+      try{
+        const core=await import("./catalogue-core.mjs");
+        const origin=core.cleanAppOrigin(appOrigin);
+        const link=$("#app-signin");
+        if(origin&&link){link.href=origin;link.hidden=false;}
+        data=await core.loadCatalogue({appOrigin,fetchFn:(url,options)=>fetch(url,options)});
+        if(data.source==="platform")deskIds=new Set((data.file.resources||[]).filter(r=>r.type==="exam").map(r=>r.id));
+      }catch(error){console.warn("Platform catalogue unavailable; using resources.json:",error);data=undefined;}
+    }
+    if(!data){
       const response=await fetch("./resources.json",{cache:"no-store"});
       if(!response.ok)throw new Error("HTTP "+response.status);
       const file=await response.json();
