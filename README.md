@@ -17,6 +17,18 @@ Prithagoras is a separate Australian education project, **not** Pri Learning (th
 
 All public pages are dependency-free HTML, CSS and JavaScript. Session logic is isolated in `session-core.mjs` so mathematical/timekeeping behaviour can be unit tested.
 
+## Connecting the site to the Prithagoras app (off by default)
+
+`config.js` holds one setting, `window.APP_ORIGIN`. While it is `""` (the shipped value) the site is exactly what it always was: the catalogue is `resources.json`, there is no sign-in link, and the site contacts no other origin.
+
+Set it to the app's https origin (no path, for example `"https://app.example"`) to turn on three things together:
+
+- a **Sign in** link in the header that opens the app;
+- the Exam Desk's note that notes stay in this browser until the student chooses to add them to their Prithagoras account, with a link to the app's `/desk/import`;
+- the **catalogue from the platform**: the library reads `GET <APP_ORIGIN>/v1/public/resources` (no cookies, no credentials). The platform serves it only when its operator has set `PRI_PUBLIC_CATALOGUE=on` and listed this site's origin in `PRI_PUBLIC_CATALOGUE_ORIGINS`.
+
+`resources.json` stays the fallback: if the platform is unreachable, answers with an error, or sends something that is not the expected shape, the site shows `resources.json` and never an empty library. Platform items that the committed file does not also hold are listed and linked but get no Exam Desk button, because the desk reads its exam configuration from `resources.json`. Publishing through the studio is unchanged.
+
 ## Publishing a paper (GitHub permissions required)
 
 1. Open the [publishing studio](https://priysharan19.github.io/prithagoras-web/studio.html). Enter title, year, subject, description, marks and question count. For examinations enter reading and working minutes, and the number of multiple-choice questions (if any).

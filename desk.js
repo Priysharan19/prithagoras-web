@@ -1,4 +1,5 @@
 import {durationConfig,questionGroups,createSession,restoreSession,remaining,updateSession,formatTime,counts} from "./session-core.mjs";
+import {cleanAppOrigin} from "./catalogue-core.mjs";
 
 const $=selector=>document.querySelector(selector);
 const escapeHTML=value=>String(value??"").replace(/[&<>"']/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
@@ -224,3 +225,11 @@ async function init(){
   }
 }
 document.addEventListener("DOMContentLoaded",init);
+
+// With an app address configured (config.js) the desk says notes can be added
+// to the student's account; with none, nothing changes.
+{
+  const origin=cleanAppOrigin(window.APP_ORIGIN);
+  const note=document.querySelector("#desk-account-note"),link=document.querySelector("#desk-account-link");
+  if(origin&&note&&link){link.href=origin+"/desk/import";note.hidden=false;}
+}

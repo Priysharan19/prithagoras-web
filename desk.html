@@ -7,7 +7,7 @@
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;550;600;650;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./desk.css"><script src="./desk.js" type="module"></script>
+<link rel="stylesheet" href="./desk.css"><script src="./config.js"></script><script src="./desk.js" type="module"></script>
 </head>
 <body>
 <a class="skip-link" href="#desk-main">Skip to workspace</a>
@@ -45,6 +45,7 @@
           <div class="overview-body"><h2 id="overview-heading">Question overview</h2><p>Track what you've attempted. This is not automated marking.</p>
             <div class="progress-display"><div class="progress-ring" id="progress-ring" style="--percent:0"><div class="progress-ring-inner"><strong id="progress-count">0</strong><span>OF <span id="progress-total">27</span></span></div></div><div class="progress-stats"><div><span class="key-dot completed"></span><span>Completed</span><strong id="completed-count">0</strong></div><div><span class="key-dot flagged"></span><span>To revisit</span><strong id="flagged-count">0</strong></div><div><span class="key-dot unseen"></span><span>Untouched</span><strong id="untouched-count">27</strong></div></div></div>
             <div class="overview-actions"><button type="button" id="export-button">Export attempt <span>↓</span></button><button type="button" id="reset-button">Reset workspace <span>↺</span></button></div>
+            <p class="panel-aside" id="desk-account-note" hidden>Your notes remain in this browser until you choose to add them to your Prithagoras account. <a id="desk-account-link" href="#">Add them to your account</a></p>
           </div>
         </section>
 
